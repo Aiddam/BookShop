@@ -1,0 +1,58 @@
+﻿@model IEnumerable<BooksShop.Domain.Entity.Book>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<head>
+    <style>
+        
+
+
+    </style>
+</head>
+<body >
+    <form  asp-action="Index" method="get">
+        <div class="search"> 
+             <div class="search-1"> <i  class='bx bx-search-alt'></i> <input name="SearchString" type="text" placeholder="Search...">
+            </div></div>
+       
+    </form>
+    
+    @if(User.IsInRole(role:BooksShop.Domain.Enum.Role.Admin.ToString()))
+    {
+        <p>
+             <a class="text-decoration-none" asp-action="Create">Create New</a>
+        </p>
+    }
+    
+
+<table class="table" >
+    
+  @if (Model!=null)
+        {
+            @foreach (var item in Model) {
+
+        <tr>
+            <td style="height:180px; width:270px" > 
+                <a asp-action="Details" asp-route-id="@item.Id" ><img  style='width:180px; height:270px; display:block' src="data:image/png;base64,@(Convert.ToBase64String(item.Image))"  /></a>
+            </td>
+            <td  style="color:#fdf2ee; "><a class="nav-link" asp-action="Details" asp-route-id="@item.Id" ><h1 ><center>@Html.DisplayFor(modelItem => item.Title)</center></h1></a>
+            <p > <span>@Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(modelItem => item.Description)</span></p> 
+            <br/>
+            <p class="leftstr">@Html.DisplayFor(modelItem => item.ReleaseDate)</p>
+             <p class="rightstr"> @Html.DisplayNameFor(model => model.Genre): @Html.DisplayFor(modelItem => item.Genre)</p>
+             <p>@Html.DisplayFor(modelItem => item.Author)</p>
+             <br/>
+             <br/>
+            </td>
+
+
+        </tr>
+         
+}
+        }
+
+
+
+</table>
+</body>

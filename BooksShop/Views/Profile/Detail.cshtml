@@ -1,0 +1,80 @@
+﻿@model BooksShop.Domain.Entity.Profile
+
+@{
+    ViewBag.Title = "Профиль";
+    Layout = "_Layout";
+}
+<head>
+    <link rel="stylesheet" href="~/css/site.css" type="text/css" asp-append-version="true" />
+    <style>
+        ::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    margin:5px;
+    box-shadow: inset 0 0 2px grey;
+    border-radius: 3px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #fdf2ee;
+    border-radius: 3px;
+}
+
+    </style>
+    <style>
+         html { overflow:  hidden; }
+    </style>
+</head>
+
+<h1 style="text-align:center; padding-bottom:60px">Profile</h1>
+<div class="sidenav" style="z-index:1">
+  <a style="text-align:center; z-index:1;padding-bottom:20px">Favorite <br />  Books:</a>
+   @if(Model!=null)
+    {
+        @foreach (var item in Model.User.FavoriteBook)
+        { 
+            <p style="text-align:center">
+                <a asp-action="Details" asp-controller="Books" asp-route-id="@item.Id" style="text-align:center">
+                    <img  style='width:170px; margin-left:50px; height:260px; display:block' src="data:image/png;base64,@(Convert.ToBase64String(item.Image))"  />
+                    </a>
+                    </p>
+        }
+    }
+
+</div>
+<div class="row "> 
+<div class="col-md-3"> 
+    @if (Model == null ||Model.Avatar==null)
+    {
+        <img height="256" width="256" src="~/image/Avatar.png" />
+    }
+    @if(Model.Avatar !=null)
+    {
+            <a style="text-align:center">
+               
+                    <img  style='width:256px; margin-left:20px; height:256px; display:block' src="data:image/png;base64,@(Convert.ToBase64String(@Model.Avatar))"  />
+                    </a>
+    }
+    <h3><a asp-action="Edit" asp-controller="Profile" >Click to Change Data</a></h3>
+</div>
+<div  class="col-md-8 ">
+    <h2 style="text-align:center; padding-bottom:30px;margin-right:220px">  @Html.DisplayFor(x=>User.Identity.Name)</h2>
+        <h2 style="text-align:left" >@Html.DisplayNameFor(x=>x.Email): @Model?.Email
+        </h2>
+        <h2>@Html.DisplayNameFor(x=>x.Age): @Model?.Age</h2>
+    <div class="vertical-line"  style="height:680px;margin-top:-308px; margin-right:40px"></div>
+</div>
+
+
+
+</div>
+
+
+
+
+
+

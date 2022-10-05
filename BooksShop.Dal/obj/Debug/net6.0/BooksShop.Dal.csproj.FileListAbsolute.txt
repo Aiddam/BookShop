@@ -1,0 +1,17 @@
+D:\c#\BooksShop\BooksShop.Dal\bin\Debug\net6.0\BooksShop.Dal.deps.json
+D:\c#\BooksShop\BooksShop.Dal\bin\Debug\net6.0\BooksShop.Dal.runtimeconfig.json
+D:\c#\BooksShop\BooksShop.Dal\bin\Debug\net6.0\BooksShop.Dal.dll
+D:\c#\BooksShop\BooksShop.Dal\bin\Debug\net6.0\BooksShop.Dal.pdb
+D:\c#\BooksShop\BooksShop.Dal\bin\Debug\net6.0\BooksShop.Domain.dll
+D:\c#\BooksShop\BooksShop.Dal\bin\Debug\net6.0\BooksShop.Domain.pdb
+D:\c#\BooksShop\BooksShop.Dal\obj\Debug\net6.0\BooksShop.Dal.csproj.AssemblyReference.cache
+D:\c#\BooksShop\BooksShop.Dal\obj\Debug\net6.0\BooksShop.Dal.GeneratedMSBuildEditorConfig.editorconfig
+D:\c#\BooksShop\BooksShop.Dal\obj\Debug\net6.0\BooksShop.Dal.AssemblyInfoInputs.cache
+D:\c#\BooksShop\BooksShop.Dal\obj\Debug\net6.0\BooksShop.Dal.AssemblyInfo.cs
+D:\c#\BooksShop\BooksShop.Dal\obj\Debug\net6.0\BooksShop.Dal.csproj.CoreCompileInputs.cache
+D:\c#\BooksShop\BooksShop.Dal\obj\Debug\net6.0\BooksShop.Dal.csproj.CopyComplete
+D:\c#\BooksShop\BooksShop.Dal\obj\Debug\net6.0\BooksShop.Dal.dll
+D:\c#\BooksShop\BooksShop.Dal\obj\Debug\net6.0\refint\BooksShop.Dal.dll
+D:\c#\BooksShop\BooksShop.Dal\obj\Debug\net6.0\BooksShop.Dal.pdb
+D:\c#\BooksShop\BooksShop.Dal\obj\Debug\net6.0\BooksShop.Dal.genruntimeconfig.cache
+D:\c#\BooksShop\BooksShop.Dal\obj\Debug\net6.0\ref\BooksShop.Dal.dll

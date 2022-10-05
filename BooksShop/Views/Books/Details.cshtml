@@ -1,0 +1,168 @@
+﻿@using BooksShop.Domain.Entity
+@model BooksShop.Domain.Entity.Book
+
+@{
+    ViewData["Title"] = "Details";
+}
+<head>
+    <style>
+        dt {
+            font-size:20px;
+        }
+        dl
+        {
+            font-size:24px;
+        }
+    </style>
+
+</head>
+
+<div class="row">
+    <div class="col-md-6">
+        <h1>Details</h1>
+    </div>
+    @if(BooksShop.Controllers.BooksController.IsTrue == true)
+    {
+        <div style="float:right; text-align:right" class="col-md-6">
+        <a class="text-decoration-none " asp-action="AddFavorite" asp-route-id="@Model?.Id"><img height="54" width="54" src="~/image/favorite_Active.png" /></a>
+    </div>
+    }
+    @if(BooksShop.Controllers.BooksController.IsTrue == false)
+    {
+        <div style="float:right; text-align:right" class="col-md-6">
+        <a class="text-decoration-none " asp-action="AddFavorite" asp-route-id="@Model?.Id"><img height="54" width="54" src="~/image/favorite_nonActive.png" /></a>
+    </div>
+    }
+
+</div>
+
+<div>
+    <hr />
+    <dl class="row" enctype="multipart/form-data">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class = "col-sm-2" >
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10" >
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReleaseDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Genre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Genre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Author)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Author)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+        <dd class = "col-sm-10">
+            <img   style='width:240px; height:300px;' src="data:image/png;base64,@(Convert.ToBase64String(Model.Image))" />
+        </dd>
+        <div>
+    @if(User.IsInRole(role:BooksShop.Domain.Enum.Role.Admin.ToString()))
+    {
+        <a style="font-size:16px" class="text-decoration-none " asp-action="Delete" asp-route-id="@Model?.Id">Delete</a><nobr>|</nobr>
+        <a style="font-size:16px" class=" text-decoration-none "  asp-controller="Books" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a><nobr>|</nobr>
+
+    }
+    @if(User.IsInRole(role:BooksShop.Domain.Enum.Role.Moderator.ToString()))
+    {
+        <a style="font-size:16px" class=" text-decoration-none "  asp-controller="Books" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a><nobr>|</nobr>
+
+    }
+    <a  style="font-size:16px" class="text-decoration-none"  asp-action="Index">Back to List</a>
+    </div>
+        
+                <form asp-controller="Message" asp-action="CreateMessage"  >
+                @{
+                    int bookId = Model.Id;
+                }
+                    <input asp-for="@bookId" id="bookId" name="bookId" type="hidden" />
+                    <div class="form-group">
+                    @{
+                        string message = "";
+                    }
+                    <textarea asp-for="@message" id="message" name="message" style="width:98%;height:120px;font-size:20px" placeholder="Your message..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Send" class="btn btn-primary" style="width:98%;" />
+                    </div>
+                </form>
+       
+    </dl>
+    @foreach(var m in Model.Messages.OrderByDescending(x=>x.DateCreate).ToList()){
+
+      <div class="container py-2 h-auto">
+      <div class="row d-flex">
+        <div class="row">
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body py-1 text-center">
+                                    <p style="font-size:34px"><strong>@m.User.Name</strong></p>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            @if (m.User.Profile.Avatar != null)
+                                            {
+
+                                                   <img  style='width:80px; height:170px; display:block' src="data:image/png;base64,@(Convert.ToBase64String(m.User.Profile.Avatar))"  />
+                                            }
+                                            @if (m.User.Profile.Avatar == null)
+                                            { 
+
+                                                   <img  style='width:80px; height:170px; display:block' src="~/image/Avatar.png"  />
+                                            }
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <p>@m.Report</p>
+                                        </div>
+                                        <div class="row">
+                                                <div class="col-sm-5">
+                                                        <p style="text-align:left;margin-left:150px;margin-top:50px">Date Create: @m.DateCreate.ToString()</p>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    @if (m.DateChange>m.DateCreate)
+                                                     {
+                                              <p style="text-align:left;margin-left:150px;margin-top:50px">Date Changed: @m.DateChange</p>
+                                                      }
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    @if (m.User.Name == User.Identity.Name) {
+                                                        <a asp-route-id="@m.Id" asp-controller="Message" asp-action="Edit"><img style="margin-left:100px;margin-top:50px" src="/image/edit.png"/></a>
+                                                        <a asp-route-id="@m.Id" asp-controller="Message" asp-action="Delete" ><img  style="margin-top:50px" src="/image/delete.png"/> 
+                                                        </a>
+                                            }
+
+                                                </div>
+                                        </div>
+                                            
+                                            
+                                            
+                                      </div>
+
+                <div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+}
+
+      
+

@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BookShop</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/BooksShop.styles.css" asp-append-version="true" />
+    <style>
+.dropbtn {
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    z-index:20;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #3e8e41;
+}
+
+.dropdown {
+    float: right;
+    position: relative;
+    display: inline-block;
+    z-index:15;
+}
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    right: 0;
+    z-index: 10;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+</style>
+</head>
+
+    <body >
+        @if (!User.Identity.IsAuthenticated)
+    {
+        <header >
+            <nav  class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark-40 border-bottom box-shadow mb-3  ">
+                <div   class="container-fluid">
+                    <a  class="text-white-50 navbar-brand "  style="font-size:32px" asp-area="" asp-controller="Account" asp-action="Login"><strong>BookShop</strong></a>
+                    <button  class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span  class="navbar-toggler-icon"></span>
+                    </button>
+                    <div  class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                         <div style="margin-left:auto;margin-right:30px" class="dropdown ">
+                                <button  onclick="DropDownFunction()" class="bg-transparent dropbtn imgcontainer"  style="height:50px;width:50px;margin-top:10px" > 
+                                    <img  onclick="DropDownFunction" style="height:50px;width:50px; margin-top:-10px"  src="~/image/Avatar.png" alt="Avatar" class="avatar">
+                                    <div id="myDropdown" class="dropdown-content">
+                                    <a asp-action="Register" asp-controller="Account" >Register</a>
+                                    <a asp-action="Login" asp-controller="Account">Log in</a>
+                                    </div>
+                                    </button>
+                                    </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    }
+    @if(User.Identity.IsAuthenticated) 
+    {
+         <header >
+            <nav  class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark-40 border-bottom box-shadow mb-3  ">
+                <div   class="container-fluid">
+                    <a  class="text-white-50 navbar-brand "  style="font-size:32px" asp-area="" asp-controller="Books" asp-action="Index"><strong>BookShop</strong></a>
+                    <button  class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span  class="navbar-toggler-icon"></span>
+                    </button>
+                    <div  class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul  class="navbar-nav flex-grow-1">
+                            <li  class="nav-item">
+                                <a  class=" text-white-50 nav-link" style="margin-top:18px;font-size:22px" asp-controller="Home" asp-action="Index"><b>Home</b></a>
+                            </li>
+                            <li  class="nav-item">
+                                <a style="margin-top:18px;font-size:22px" class="text-white-50 nav-link " asp-controller="Home" asp-action="Privacy"><b>Privacy</b></a>
+                            </li>
+                                       <div style="margin-left:auto;margin-right:30px" class="dropdown ">
+                                           
+                                <button onclick="DropDownFunction()" class="bg-transparent dropbtn imgcontainer" style="height:50px;width:50px;margin-top:10px"> 
+                                    <img  onclick="DropDownFunction" style="height:50px;width:50px;margin-top:-10px"    src="~/image/Avatar.png" alt="Avatar" class="avatar">
+                                    <div id="myDropdown" class="dropdown-content">
+                                    <a asp-action="Detail" asp-controller="Profile" >My Profile</a>
+                                    @if(!User.IsInRole("User"))
+                                        { 
+                                           <a asp-action="Index" asp-controller="Users">Admin</a>
+
+                                        }
+                                        <form  method="post" asp-action="Logout" asp-controller="Account">
+                                    <input class="btn" type="submit" value="Log out"/>
+                                    </form>
+                                    </div>
+                                    </button>
+                                    </div>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    }
+
+    <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
+    <script>
+                    function DropDownFunction() {
+                    document.getElementById("myDropdown").classList.toggle("show"); }
+                     window.onclick = function(event) {
+                     if (event.target.matches('.dropbtn')) {
+
+                     var dropdowns = document.getElementsByClassName("dropdown-content");
+                     var i;
+                     for (i = 0; i < dropdowns.length; i++) {
+                     var openDropdown = dropdowns[i];
+                     if (openDropdown.classList.contains('show')) {
+                     openDropdown.classList.remove('show');}
+                     }
+               }
+}
+    </script>
+
+
+</html>

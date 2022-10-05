@@ -1,0 +1,68 @@
+﻿@using BooksShop.Domain.Enum
+@using BooksShop.Domain.ViewModel.Profile
+@model IEnumerable<BooksShop.Domain.Entity.User>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<body >
+     <form  asp-action="Index" method="get">
+        <div class="search"> 
+             <div class="search-1"> <i  class='bx bx-search-alt'></i> <input name="SearchString" type="text" placeholder="Search">
+            </div></div>
+       
+    </form>
+    
+    @foreach (var item in Model)
+    {
+<div class="row"> 
+<div class="col-md-4"> 
+
+                 @if(Model == null ||item.Profile.Avatar==null)
+                {
+                    <a ><img  height="256" width="256" src="~/image/Avatar.png" /></a>
+                }
+                @if(item.Profile.Avatar !=null)
+                {
+                        <a  style="text-align:center">
+               
+                                <img  style='width:256px; margin-left:20px; height:256px; display:block' src="data:image/png;base64,@(Convert.ToBase64String(@item.Profile.Avatar))"  />
+                                </a>
+                }
+           
+
+            
+   
+</div>
+ <div  class="col-md-4" >
+
+                <h2 style="text-align:center;margin-right:220px;margin-top:100px">@item.Name</h2>
+                 
+            </div>
+            <div class="col-md-4">
+                <form asp-action="Edit" >
+                    <input type="hidden" asp-for="FirstOrDefault(x=>x.Id==item.Id).Id" />
+
+                     <label style="font-size:22px" asp-for="FirstOrDefault(x=>x.Id==item.Id).Role" class="control-label"></label>:
+                <select style="font-size:22px;margin-top:100px" asp-for="FirstOrDefault(x=>x.Id==item.Id).Role" asp-items="@Html.GetEnumSelectList<Role>()"></select>
+                    <input style="font-size:21px" type="submit" value="Save"/>
+
+                </form>
+
+                 <form asp-action="Delete" style="padding-top:10px;padding-left:40px">
+                        <input type="hidden" asp-for="FirstOrDefault(x=>x.Id==item.Id).Id" />
+                        <input type="submit" value="Delete" style="width:200px" class="btn btn-danger " /> 
+                 </form>
+                
+            </div>
+</div>
+<br />
+<br/>
+
+            }
+</body>
+
+
+
